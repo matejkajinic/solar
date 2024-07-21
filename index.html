@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Solar System Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+        <defs>
+          <!-- Improved star gradient -->
+          <radialGradient id="starGradient">
+            <stop offset="0%" stop-color="white" stop-opacity="1"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </radialGradient>
+          
+          <!-- Enhanced glow filter -->
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+      
+          <!-- Improved sun gradient -->
+          <radialGradient id="sunGradient">
+            <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="50%" stop-color="#ffff00" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ff8c00" stop-opacity="0.6"/>
+          </radialGradient>
+      
+          <!-- Planet gradients -->
+          <radialGradient id="mercuryGradient">
+            <stop offset="0%" stop-color="#e5e5e5" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#8a8a8a" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="venusGradient">
+            <stop offset="0%" stop-color="#ffd85c" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#d4a017" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="earthGradient">
+            <stop offset="0%" stop-color="#4b9cd3" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#1b3f8b" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="marsGradient">
+            <stop offset="0%" stop-color="#ff6b6b" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#a52a2a" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="jupiterGradient">
+            <stop offset="0%" stop-color="#ffdab9" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#cd853f" stop-opacity="0.8"/>
+          </radialGradient>
+          <radialGradient id="saturnGradient">
+            <stop offset="0%" stop-color="#ffd700" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#daa520" stop-opacity="0.8"/>
+          </radialGradient>
+        </defs>
+      
+        <!-- Black background -->
+        <rect width="100%" height="100%" fill="black"/>
+      
+        <!-- Stars -->
+        <g id="stars">
+          <script type="text/javascript">
+            <![CDATA[
+              for (let i = 0; i < 200; i++) {
+                const x = Math.random() * 800;
+                const y = Math.random() * 600;
+                const r = Math.random() * 1.5 + 0.5;
+                const opacity = Math.random() * 0.5 + 0.5;
+                document.write(`<circle cx="${x}" cy="${y}" r="${r}" fill="url(#starGradient)" opacity="${opacity}">
+                  <animate attributeName="opacity" values="${opacity};${opacity/2};${opacity}" dur="${Math.random() * 3 + 2}s" repeatCount="indefinite"/>
+                </circle>`);
+              }
+            ]]>
+          </script>
+        </g>
+      
+        <!-- Orbital plane -->
+        <ellipse cx="400" cy="300" rx="390" ry="100" fill="none" stroke="#333" stroke-width="0.5" opacity="0.6"/>
+      
+        <!-- Sun -->
+        <g>
+          <circle cx="400" cy="300" r="40" fill="url(#sunGradient)" filter="url(#glow)"/>
+          <animate attributeName="opacity" values="0.8;1;0.8" dur="4s" repeatCount="indefinite"/>
+        </g>
+      
+        <!-- Planets and their orbits -->
+        <g id="planets">
+          <!-- Mercury -->
+          <ellipse cx="400" cy="300" rx="70" ry="18" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="0" cy="0" r="4" fill="url(#mercuryGradient)" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath xlink:href="#mercury-orbit"/>
+            </animateMotion>
+          </circle>
+          <path id="mercury-orbit" d="M470,300 A70,18 0 1,1 330,300 A70,18 0 1,1 470,300" fill="none"/>
+      
+          <!-- Venus -->
+          <ellipse cx="400" cy="300" rx="110" ry="28" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="0" cy="0" r="7" fill="url(#venusGradient)" filter="url(#glow)">
+            <animateMotion dur="5s" repeatCount="indefinite">
+              <mpath xlink:href="#venus-orbit"/>
+            </animateMotion>
+          </circle>
+          <path id="venus-orbit" d="M510,300 A110,28 0 1,1 290,300 A110,28 0 1,1 510,300" fill="none"/>
+      
+          <!-- Earth -->
+          <ellipse cx="400" cy="300" rx="150" ry="39" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="0" cy="0" r="8" fill="url(#earthGradient)" filter="url(#glow)">
+            <animateMotion dur="7s" repeatCount="indefinite">
+              <mpath xlink:href="#earth-orbit"/>
+            </animateMotion>
+          </circle>
+          <path id="earth-orbit" d="M550,300 A150,39 0 1,1 250,300 A150,39 0 1,1 550,300" fill="none"/>
+      
+          <!-- Mars -->
+          <ellipse cx="400" cy="300" rx="190" ry="49" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="0" cy="0" r="6" fill="url(#marsGradient)" filter="url(#glow)">
+            <animateMotion dur="9s" repeatCount="indefinite">
+              <mpath xlink:href="#mars-orbit"/>
+            </animateMotion>
+          </circle>
+          <path id="mars-orbit" d="M590,300 A190,49 0 1,1 210,300 A190,49 0 1,1 590,300" fill="none"/>
+      
+          <!-- Asteroid belt -->
+          <g>
+            <ellipse cx="400" cy="300" rx="250" ry="65" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="2,4"/>
+            <animateTransform attributeName="transform" type="rotate" from="0 400 300" to="360 400 300" dur="50s" repeatCount="indefinite"/>
+          </g>
+      
+          <!-- Jupiter -->
+          <ellipse cx="400" cy="300" rx="310" ry="81" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="0" cy="0" r="15" fill="url(#jupiterGradient)" filter="url(#glow)">
+            <animateMotion dur="15s" repeatCount="indefinite">
+              <mpath xlink:href="#jupiter-orbit"/>
+            </animateMotion>
+          </circle>
+          <path id="jupiter-orbit" d="M710,300 A310,81 0 1,1 90,300 A310,81 0 1,1 710,300" fill="none"/>
+      
+          <!-- Saturn -->
+          <ellipse cx="400" cy="300" rx="370" ry="97" fill="none" stroke="#444" stroke-width="0.5" opacity="0.6"/>
+          <g>
+            <circle cx="0" cy="0" r="13" fill="url(#saturnGradient)" filter="url(#glow)"/>
+            <ellipse cx="0" cy="0" rx="22" ry="3" fill="none" stroke="#daa520" stroke-width="2" opacity="0.7" transform="rotate(20)"/>
+            <animateMotion dur="20s" repeatCount="indefinite">
+              <mpath xlink:href="#saturn-orbit"/>
+            </animateMotion>
+          </g>
+          <path id="saturn-orbit" d="M770,300 A370,97 0 1,1 30,300 A370,97 0 1,1 770,300" fill="none"/>
+        </g>
+      
+        <!-- Labels -->
+        <g font-family="Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="middle">
+          <text x="400" y="270" fill="#fff">Sun</text>
+          <text x="470" y="290">Mercury</text>
+          <text x="510" y="280">Venus</text>
+          <text x="550" y="270">Earth</text>
+          <text x="590" y="260">Mars</text>
+          <text x="650" y="240">Asteroid Belt</text>
+          <text x="710" y="230">Jupiter</text>
+          <text x="770" y="220">Saturn</text>
+        </g>
+      
+        <!-- Title and description -->
+        <text x="400" y="30" font-family="Arial, sans-serif" font-size="24" fill="#fff" text-anchor="middle" font-weight="bold">3D Solar System</text>
+        <text x="400" y="560" font-family="Arial, sans-serif" font-size="14" fill="#aaa" text-anchor="middle">Planets orbit on a tilted plane, creating a 3D perspective</text>
+      </svg>
+      
+</body>
+</html>
